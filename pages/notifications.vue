@@ -20,12 +20,15 @@ const tabs = $computed<CommonRouteTabOption[]>(() => [
     display: isHydrated.value ? t('tab.notifications_mention') : '',
   },
 ])
+
+const reRenderKey = ref(0)
+const reRender = () => reRenderKey.value += 1
 </script>
 
 <template>
   <MainContent>
     <template #title>
-      <NuxtLink to="/notifications" timeline-title-style flex items-center gap-2 @click="$scrollToTop">
+      <NuxtLink to="/notifications" timeline-title-style flex items-center gap-2 @click="reRender">
         <div i-ri:notification-4-line />
         <span>{{ t('nav.notifications') }}</span>
       </NuxtLink>
@@ -43,7 +46,7 @@ const tabs = $computed<CommonRouteTabOption[]>(() => [
     </template>
 
     <template #header>
-      <CommonRouteTabs replace :options="tabs" />
+      <CommonRouteTabs :key="reRenderKey" replace :options="tabs" />
     </template>
 
     <slot>
@@ -51,7 +54,7 @@ const tabs = $computed<CommonRouteTabOption[]>(() => [
         <NotificationPreferences />
       </template>
 
-      <NuxtPage />
+      <NuxtPage :key="reRenderKey" />
     </slot>
   </MainContent>
 </template>

@@ -34,12 +34,15 @@ const tabs = $computed<CommonRouteTabOption[]>(() => [
     disabled: !isHydrated.value || !currentUser.value,
   },
 ])
+
+const reRenderKey = ref(0)
+const reRender = () => reRenderKey.value += 1
 </script>
 
 <template>
   <MainContent :no-overflow-hidden="isExtraLargeScreen" :back-on-small-screen="isExtraLargeScreen">
     <template v-if="!isExtraLargeScreen" #title>
-      <span timeline-title-style flex items-center gap-2 cursor-pointer @click="$scrollToTop">
+      <span timeline-title-style flex items-center gap-2 cursor-pointer @click="reRender">
         <div i-ri:hashtag />
         <span>{{ t('nav.explore') }}</span>
       </span>
@@ -51,6 +54,6 @@ const tabs = $computed<CommonRouteTabOption[]>(() => [
     <template #header>
       <CommonRouteTabs replace :options="tabs" />
     </template>
-    <NuxtPage v-if="isHydrated" />
+    <NuxtPage v-if="isHydrated" :key="reRenderKey" />
   </MainContent>
 </template>

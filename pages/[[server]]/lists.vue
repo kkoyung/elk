@@ -63,18 +63,21 @@ function removeEntry(id: string) {
 }
 
 onDeactivated(() => clearError(false))
+
+const reRenderKey = ref(0)
+const reRender = () => reRenderKey.value += 1
 </script>
 
 <template>
   <MainContent>
     <template #title>
-      <NuxtLink to="/lists" timeline-title-style flex items-center gap-2 @click="$scrollToTop">
+      <NuxtLink to="/lists" timeline-title-style flex items-center gap-2 @click="reRender">
         <div i-ri:list-check />
         <span text-lg font-bold>{{ t('nav.lists') }}</span>
       </NuxtLink>
     </template>
     <slot>
-      <CommonPaginator ref="paginatorRef" :paginator="paginator">
+      <CommonPaginator ref="paginatorRef" :key="reRenderKey" :paginator="paginator">
         <template #default="{ item }">
           <ListEntry
             :list="item"
