@@ -13,7 +13,7 @@ if (process.client && route.path === '/signin/callback')
   router.push('/home')
 
 const { t } = useI18n()
-useHeadFixed({
+useHydratedHead({
   title: () => t('nav.home'),
 })
 

@@ -42,7 +42,7 @@ const outdatedEntries = computed<string[]>(() => {
   return localesStatuses[locale.value]!.outdated
 })
 
-const showDetail = (key: string, tab: Tab = 'missing', fromTab = false) => {
+function showDetail(key: string, tab: Tab = 'missing', fromTab = false) {
   if (key === locale.value && tab === localeTab.value) {
     if (fromTab)
       return
@@ -57,7 +57,7 @@ const showDetail = (key: string, tab: Tab = 'missing', fromTab = false) => {
   nextTick().then(() => hidden.value = false)
 }
 
-const copyToClipboard = async () => {
+async function copyToClipboard() {
   try {
     await navigator.clipboard.writeText([
       `# ${localeTitle.value}`,
@@ -107,7 +107,7 @@ const copyToClipboard = async () => {
         </tr>
       </thead>
       <tbody>
-        <template v-for="({ title, file, translated, missing, outdated, total, isSource }, key) in localesStatuses" :key="key">
+        <template v-for="({ title, useFile, translated, missing, outdated, total, isSource }, key) in localesStatuses" :key="key">
           <tr
             v-if="totalReference > 0"
             :class="[{ expandable: !isSource }]"
@@ -121,10 +121,24 @@ const copyToClipboard = async () => {
               </div>
             </td>
             <template v-if="isSource">
-              <td colspan="5" class="source-text">
+              <td colspan="4" class="source-text">
                 <div>
                   {{ total }} keys as source
                 </div>
+              </td>
+              <td>
+                <NuxtLink
+                  :href="`https://pr.new/github.com/elk-zone/elk/tree/main/locales/${useFile}`"
+                  target="_blank"
+                  class="codeflow"
+                  title="Raise a PR with Codeflow (opens in new window)"
+                  @click.stop
+                >
+                  Edit
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5 21q-.825 0-1.413-.587Q3 19.825 3 19V5q0-.825.587-1.413Q4.175 3 5 3h7v2H5v14h14v-7h2v7q0 .825-.587 1.413Q19.825 21 19 21Zm4.7-5.3l-1.4-1.4L17.6 5H14V3h7v7h-2V6.4Z" />
+                  </svg>
+                </NuxtLink>
               </td>
             </template>
             <template v-else>
@@ -140,8 +154,7 @@ const copyToClipboard = async () => {
               <td><strong>{{ `${total}` }}</strong></td>
               <td>
                 <NuxtLink
-                  v-if="outdated.length > 0 || missing.length > 0"
-                  :href="`https://pr.new/github.com/elk-zone/elk/tree/main/locales/${file}`"
+                  :href="`https://pr.new/github.com/elk-zone/elk/tree/main/locales/${useFile}`"
                   target="_blank"
                   class="codeflow"
                   title="Raise a PR with Codeflow (opens in new window)"

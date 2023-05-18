@@ -11,12 +11,12 @@ const client = useMastoClient()
 
 const paginator = client.v1.lists.list()
 
-useHeadFixed({
+useHydratedHead({
   title: () => t('nav.lists'),
 })
 
 const paginatorRef = ref()
-const inputRef = ref()
+const inputRef = ref<HTMLInputElement>()
 let actionError = $ref<string | undefined>(undefined)
 let busy = $ref<boolean>(false)
 const createText = ref('')
@@ -81,7 +81,7 @@ const reRender = () => reRenderKey.value += 1
         <template #default="{ item }">
           <ListEntry
             :list="item"
-            @list-updated="updateEntry"
+            @update:list="updateEntry"
             @list-removed="removeEntry"
           />
         </template>

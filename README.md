@@ -39,7 +39,7 @@ The Elk team maintains a deployment at:
 
 ### Self-Host Docker Deployment
 
-In order to host Elk yourself you can use the provided Dockerfile to build a container with elk. Be aware, that Elk only loads properly of the connection is done via SSL/TLS. The Docker container itself does not provide any SSL/TLS handling. You'll have to add this bit yourself. 
+In order to host Elk yourself you can use the provided Dockerfile to build a container with elk. Be aware, that Elk only loads properly if the connection is done via SSL/TLS. The Docker container itself does not provide any SSL/TLS handling. You'll have to add this bit yourself. 
 One could put Elk behind popular reverse proxies with SSL Handling like Traefik, NGINX etc. 
 
 1. checkout source ```git clone https://github.com/elk-zone/elk.git```
@@ -61,7 +61,6 @@ These are known deployments using Elk as an alternative Web client for Mastodon 
 - [elk.universeodon.com](https://elk.universeodon.com) - Use Elk for the Universeodon Server
 - [elk.vmst.io](https://elk.vmst.io) - Use Elk for the `vmst.io` Server
 - [elk.hostux.social](https://elk.hostux.social) - Use Elk for the `hostux.social` Server
-- [elk.freelancers.online](https://elk.freelancers.online) - Use Elk for the `freelancers.online` Server
 - [elk.cupoftea.social](https://elk.cupoftea.social) - Use Elk for the `cupoftea.social` Server
 - [elk.aus.social](https://elk.aus.social) - Use Elk for the `aus.social` Server
 
